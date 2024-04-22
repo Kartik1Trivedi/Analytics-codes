@@ -1,0 +1,37 @@
+def data_overview(df):
+    print("a glimpse of the data")
+    print("----------------------------------------------------------------------------")
+    display(df.head())
+    print("\n")
+    
+    print("shape of the dataset")
+    print("----------------------------------------------------------------------------")
+    display(df.shape)
+    print("\n")
+    
+    print("statistical summary")
+    print("----------------------------------------------------------------------------")
+    display(df.describe().T)
+    print("\n")
+    
+    print("information of features")
+    print("----------------------------------------------------------------------------")
+    display(df.info())
+    print("\n")
+    
+    print("missing values")
+    print("----------------------------------------------------------------------------")
+    display(df.isnull().sum())
+    print("\n")
+    
+    print("checking for duplicates")
+    print("----------------------------------------------------------------------------")
+    print(f"number of dupliacte rows: {df.duplicated().sum()}")
+    print("\n")
+    
+    object_columns = df.select_dtypes(include='object').columns #identify columns with object data type
+    for column in object_columns:
+        print("value counts for" + column)
+        print("----------------------------------------------------------------------------")
+        print(df[column].value_counts())
+        print("\n")
