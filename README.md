@@ -1,1 +1,1 @@
-This is my first git repository
+This repsitory contains defined functions used in data analysis and machine learning
