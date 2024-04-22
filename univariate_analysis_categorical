@@ -1,0 +1,15 @@
+def univariateAnalysis_category(df, cat_column):
+    print("Details of " + cat_column)
+    print("----------------------------------------------------------------")
+    print(df[cat_column].value_counts())
+    plt.figure()
+    plt.figure(figsize=(12, 8))
+    plots = df[cat_column].value_counts().plot.bar(title="Frequency Distribution of " + cat_column)
+    for bar in plots.patches:
+        plots.annotate(format(bar.get_height(), '.2f'),
+                   (bar.get_x() + bar.get_width() / 2,
+                    bar.get_height()), ha='center', va='center',
+                   size=15, xytext=(0, 8),
+                   textcoords='offset points')
+    plt.show()
+    print("       ")
