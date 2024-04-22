@@ -1,0 +1,16 @@
+def treat_outlier(x):
+    # taking 5,25,75 percentile of column
+    q5= np.percentile(x,5)
+    q25=np.percentile(x,25)
+    q75=np.percentile(x,75)
+    q95=np.percentile(x,95)
+    #calculationg IQR range
+    IQR=q75-q25
+    #Calculating minimum threshold
+    lower_bound=q25-(1.5*IQR)
+    upper_bound=q75+(1.5*IQR)
+    #Capping outliers
+    return x.apply(lambda y: q95 if y > q95 else y).apply(lambda y: q5 if y < q5 else y)
+
+for i in df_num[outlier_list]:    
+    df_num[i]=treat_outlier(df_num[i])
