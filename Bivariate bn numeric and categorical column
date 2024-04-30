@@ -1,0 +1,20 @@
+def num_cat_bivariate(df, cat_col, numeric_columns):
+    # Determine the number of rows and columns needed for subplots
+    num_plots = len(numeric_columns)
+    num_cols = min(3, num_plots)
+    num_rows = math.ceil(num_plots / num_cols)
+
+    # Create subplots
+    plt.figure(figsize=(15, num_rows * 4))
+
+    # Plot violin plots for each numeric column
+    for i, num_col in enumerate(numeric_columns):
+        if i < num_plots:  # Check if we haven't exceeded the number of numeric columns
+            plt.subplot(num_rows, num_cols, i+1)
+            sns.violinplot(x=cat_col, y=num_col, data=df)
+            plt.title(f'{num_col} vs {cat_col}')
+            plt.xticks(rotation=90)  # Rotate x-axis tick labels
+
+    # Adjust layout
+    plt.tight_layout()
+    plt.show()
