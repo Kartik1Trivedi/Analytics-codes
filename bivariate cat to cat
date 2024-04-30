@@ -1,0 +1,7 @@
+def bivariate_cat(df, categorical_columns):
+    for i in range(0,len(categorical_columns)):
+        for j in range(i+1, len(categorical_columns)):
+            print(f"Cross-tabulation between {categorical_columns[i]} and {categorical_columns[j]}")
+            cross_tab = pd.crosstab(df[categorical_columns[i]], df[categorical_columns[j]])
+            display(cross_tab)
+            print('\n')
