@@ -4,30 +4,30 @@ def univariateAnalysis_numeric(df,column,nbins):
     print(df[column].describe(),end=' ')
     
     
-    plt.figure(figsize=[25,10])
+    fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 4))
     print("Distribution of " + column)
     print("----------------------------------------------------------------------------")
-    a=round(df[column].min())
-    b=round(df[column].max())
-    freq, bins, patches = plt.hist(df[column], bins=nbins, range=[a,b], edgecolor='Black', color='cyan')
-    bin_centers = np.diff(bins)*0.5 + bins[:-1]
+
+    # Calculate min and max values for the column
+    a = round(df[column].min())
+    b = round(df[column].max())
+    # Plot histogram with annotations
+    freq, bins, patches = axs[0].hist(df[column], range=[a, b], edgecolor='pink', color='cyan')
+    bin_centers = np.diff(bins) * 0.5 + bins[:-1]
     n = 0
     for fr, x, patch in zip(freq, bin_centers, patches):
-      height = int(freq[n])
-      plt.annotate("{}".format(height),
-               xy = (x, height),             # top left corner of the histogram bar
-               xytext = (0,0.2),             # offsetting label position above its bar
-               textcoords = "offset points", # Offset (in points) from the *xy* value
-               ha = 'center', va = 'bottom'
-               )
-      n = n+1
+        height = int(freq[n])
+        axs[0].annotate("{}".format(height),
+                    xy=(x, height),  # top left corner of the histogram bar
+                    xytext=(0, 0.2),  # offsetting label position above its bar
+                    textcoords="offset points",  # Offset (in points) from the *xy* value
+                    ha='center', va='bottom')
+        n = n + 1
+    axs[0].set_xlabel(column)
+    axs[0].tick_params(axis='x', labelrotation=90)
+        
+    # Plot boxplot
+    sns.boxplot(x=column, data=df, ax=axs[1], color = 'pink')
 
-    #plt.legend()
-    #plt.xticks(range(a,b,round((b-a)/nbins)))
-    plt.show;
-    plt.figure()
-    print("BoxPlot of " + column)
-    print("----------------------------------------------------------------------------")
-    ax = sns.boxplot(x=df[column])
-    #ax.legend()
+    # Show the plots
     plt.show()
