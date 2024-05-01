@@ -1,9 +1,4 @@
-def univariateAnalysis_numeric(df,column,nbins):
-    print("Description of " + column)
-    print("----------------------------------------------------------------------------")
-    print(df[column].describe(),end=' ')
-    
-    
+def univariateAnalysis_numeric(df,column):
     fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 4))
     print("Distribution of " + column)
     print("----------------------------------------------------------------------------")
@@ -28,6 +23,8 @@ def univariateAnalysis_numeric(df,column,nbins):
         
     # Plot boxplot
     sns.boxplot(x=column, data=df, ax=axs[1], color = 'pink')
+    axs[1].tick_params(axis='x', labelrotation=90)
 
     # Show the plots
     plt.show()
+    
