@@ -1,10 +1,28 @@
-from matplotlib.patches import Rectangle
-fig,ax = plt.subplots(figsize=(22, 10), facecolor='w', edgecolor='k')
-ax = sns.heatmap(df_pca_loading, annot=True, vmax=1.0, vmin=0, cmap='Blues', cbar=False, fmt='.2g', ax=ax,
-                 yticklabels=['PC0','PC1','PC2','PC3','PC4','PC5','PC6','PC7'])
+# for pc's in rows
+def highlight_max_pc_vector(df, column_names)
+  from matplotlib.patches import Rectangle
+  fig,ax = plt.subplots(figsize=(22, 10), facecolor='w', edgecolor='k')
+  ax = sns.heatmap(df, annot=True, vmax=1.0, vmin=0, cmap='Blues', cbar=False, fmt='.2g', ax=ax,
+                 yticklabels=column_names)
 
-column_max = df_pca_loading.abs().idxmax(axis=0)
+column_max = df.abs().idxmax(axis=0)
 
-for col, variable in enumerate(df_pca_loading.columns):
-    position = df_pca_loading.index.get_loc(column_max[variable])
+for col, variable in enumerate(df.columns):
+    position = df.index.get_loc(column_max[variable])
     ax.add_patch(Rectangle((col, position),1,1, fill=False, edgecolor='red', lw=3))
+
+
+
+# for pc's in columns
+def highlight_max_pc_vector(df, column_names):
+    from matplotlib.patches import Rectangle
+
+    fig, ax = plt.subplots(figsize=(22, 30), facecolor='w', edgecolor='k')
+    ax = sns.heatmap(pca_fh_extracted, annot=True, vmax=1.0, vmin=0, cmap='Blues', cbar=False, fmt='.2g', ax=ax,
+                     xticklabels=pca_fh_extracted.columns)
+
+    max_column = pca_fh_extracted.abs().idxmax(axis=1)
+
+    for row, variable in enumerate(pca_fh_extracted.index):
+        position = pca_fh_extracted.columns.get_loc(max_column[variable])
+        ax.add_patch(Rectangle((position, row), 1, 1, fill=False, edgecolor='red', lw=3))
