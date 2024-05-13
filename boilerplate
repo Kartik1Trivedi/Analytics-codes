@@ -1,0 +1,2 @@
+# replace values
+df.column.replace([values],[new_values],inplace=True )
