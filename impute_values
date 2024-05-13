@@ -2,8 +2,8 @@ def impute_values(df):
   # for non object columns
   for column in df.columns:
       if df[column].dtype != 'object':
-          mean = df[column].mean()
-          df[column] = df[column].fillna(mean)      
+          median = df[column].median()
+          df[column] = df[column].fillna(median)      
 
   # for object columns
   import statistics
