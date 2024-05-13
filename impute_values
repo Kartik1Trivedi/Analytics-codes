@@ -1,0 +1,15 @@
+def impute_values(df):
+  # for non object columns
+  for column in df.columns:
+      if df[column].dtype != 'object':
+          mean = df[column].mean()
+          df[column] = df[column].fillna(mean)      
+
+  # for object columns
+  import statistics
+  for column in df.columns:
+      if df[column].dtype == 'object':
+          mode = df[column].mode()
+          df[column] = df[column].fillna(mode)    
+        
+  df.isnull().sum()    
