@@ -1,12 +1,12 @@
 df_num = df.select_dtypes(include = 'number')
 def bivariate_num_num(df, df_num):
   # pairplot
-  print(f'pair plot for {df}') 
+  print('pair plot') 
   sns.pairplot(data = df, corner = True)
   plt.show()
 
   # heatmap
-  print(f'heatmap for {df})
+  print('heatmap')
   corr = df_num.corr(method='pearson')
   mask = np.triu(np.ones_like(corr, dtype=np.bool_)) 
   fig = plt.subplots(figsize=(25, 15))
