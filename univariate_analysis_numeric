@@ -1,4 +1,5 @@
 def univariateAnalysis_numeric(df,column):
+    print(f'Skewness of {column}: ', df[column].skew())
     fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 4))
     print("Distribution of " + column)
     print("----------------------------------------------------------------------------")
