@@ -1,15 +1,13 @@
+import statistics
 def impute_values(df):
-  # for non object columns
-  for column in df.columns:
-      if df[column].dtype != 'object':
-          median = df[column].median()
-          df[column] = df[column].fillna(median)      
-
-  # for object columns
-  import statistics
-  for column in df.columns:
-      if df[column].dtype == 'object':
-          mode = df[column].mode()
-          df[column] = df[column].fillna(mode)    
-        
+    for column in df.columns:
+        # for non object columns
+        if df[column].dtype != 'object':
+            median = df[column].median()
+            df[column] = df[column].fillna(median) 
+        # for object columns
+        elif df[column].dtype == 'object':
+             mode = df[column].mode()
+             df[column] = df[column].fillna(mode)
   df.isnull().sum()    
+
