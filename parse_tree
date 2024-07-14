@@ -1,0 +1,58 @@
+import spacy
+import nltk
+from collections import defaultdict
+
+# Load spaCy's English language model
+nlp = spacy.load('en_core_web_sm')
+
+# Define a sentence to parse
+sentence = "Alice loves Bob."
+
+# Parse the sentence using spaCy
+doc = nlp(sentence)
+
+# Function to extract CFG rules from spaCy parse tree
+def extract_cfg_rules(doc):
+    rules = defaultdict(list)
+    pos_tags = {token.text: token.pos_ for token in doc}
+    
+    def traverse(token):
+        if not list(token.children):
+            return token.text
+        left = token.text
+        right = " ".join(traverse(child) for child in token.children)
+        rules[f"{pos_tags[left]}"] = [f"{pos_tags[child.text]}" for child in token.children]
+        return f"({left} {right})"
+
+    for token in doc:
+        if token.head == token:
+            root = token
+            break
+    
+    traverse(root)
+    return rules, root
+
+# Extract CFG rules and root token
+cfg_rules, root = extract_cfg_rules(doc)
+
+# Create CFG grammar string
+cfg_grammar = f"S -> {root.pos_}\n"
+for lhs, rhs in cfg_rules.items():
+    rhs_str = " ".join(rhs)
+    cfg_grammar += f"{lhs} -> {rhs_str}\n"
+
+# Print the CFG grammar
+print("CFG Grammar:\n", cfg_grammar)
+
+# Define the grammar in NLTK
+grammar = nltk.CFG.fromstring(cfg_grammar)
+
+# Parse the sentence using the defined grammar
+parser = nltk.ChartParser(grammar)
+tokens = [token.text for token in doc]
+for tree in parser.parse(tokens):
+    print(tree)
+
+# Display the parse tree
+for tree in parser.parse(tokens):
+    tree.pretty_print()
